@@ -1,8 +1,22 @@
 version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    docker:
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+  build-and-test:
+    executor:
+      name: node/default
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run:
+                name: Build
+                command: npm run build
+            - run:
+                name: Run tests
+                command: npm run test:cov
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test

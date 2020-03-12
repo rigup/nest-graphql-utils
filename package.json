@@ -1,0 +1,81 @@
+{
+  "name": "nest-graphql-utils",
+  "version": "0.1.0",
+  "description": "A collection of GraphQL utilities for NestJS apps",
+  "keywords": [
+    "nest",
+    "graphql"
+  ],
+  "repository": {
+    "url": "https://github.com/rigup/nest-graphql-utils"
+  },
+  "homepage": "https://github.com/rigup/nest-graphql-utils#readme",
+  "bugs": "https://github.com/rigup/nest-graphql-utils/issues",
+  "author": "RigUp (https://www.rigup.com)",
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx rimraf ./dist && npx tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint '{src,apps,libs,test}/**/*.ts'",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest --watch",
+    "test:cov": "jest --coverage",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test:cov",
+    "version": "git add -A",
+    "postversion": "git push && git push --tags"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "class-validator": "^0.11.0",
+    "dataloader": "^2.0.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "peerDependencies": {
+    "type-graphql": "^0.17.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "25.1.1",
+    "@types/node": "^13.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "graphql": "^14.6.0",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "25.1.0",
+    "type-graphql": "^0.17.6",
+    "typescript": "^3.7.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".test.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./setupTests.ts"
+    ]
+  },
+  "lint-staged": {
+    "*.ts": "npm run lint"
+  }
+}
