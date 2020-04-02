@@ -1,5 +1,5 @@
 import { BatchLoader } from './batchLoader';
-import { createTestData, TestNode } from './testUtils';
+import { createTestData, TestNode } from '../testUtils';
 
 const data = createTestData(50);
 

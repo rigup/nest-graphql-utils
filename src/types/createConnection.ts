@@ -1,5 +1,5 @@
 import { IPageInfo } from './pageInfo';
-import { Cursor } from './cursor';
+import { Cursor } from '../utilities/cursor';
 import { IConnectionClass, PaginationArgs, IConnection } from './connection';
 import { IEdge } from './edge';
 

@@ -1,4 +1,4 @@
-import { Connection } from '../connection';
+import { Connection } from '../types/connection';
 
 export class TestNode {
   constructor(public id: number) {}
