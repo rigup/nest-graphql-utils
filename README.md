@@ -172,7 +172,7 @@ We can use batch loading to avoid the N+1 query problem here. First, we need to 
 ```typescript
 import { BatchLoader } from 'nest-graphql-utils';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 class TodoListLoader extends BatchLoader<TodoList> {
   constructor(private readonly service: TodoService) {}
 
@@ -182,11 +182,26 @@ class TodoListLoader extends BatchLoader<TodoList> {
 }
 ```
 
-We can then update the `TodoItemResolver` to use the new loader (injected via the constructor)
+We can then update the `resolveList` method in our `TodoItemResolver` to use the new loader
 
 ```typescript
 @ResolveProperty('list', returns => TodoList)
-public async resolveList(@Parent() item: TodoItem) {
-  return await this.loader.loadOne(item.listId);
+public async resolveList(
+  @Parent() item: TodoItem,
+  @Loader(TodoListLoader) loader: TodoListLoader,
+) {
+  return await loader.loadOne(item.listId);
 }
+```
+
+Finally, we need to provide the `DataLoaderInterceptor` in order for the `Loader` decorator to work. We do that by adding the provider to our app module
+
+``` typescript
+@Module({
+  providers: [
+    // any other providers that your app module uses,
+    DataLoaderInterceptorProvider,
+  ],
+})
+export class AppModule {}
 ```
