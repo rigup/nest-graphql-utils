@@ -4,9 +4,7 @@ export abstract class BatchLoader<TItem, TKey = number> {
   private loader: DataLoader<TKey, TItem>;
 
   constructor() {
-    this.loader = new DataLoader<TKey, TItem>(keys =>
-      this.load(keys as TKey[]),
-    );
+    this.loader = new DataLoader<TKey, TItem>(keys => this.load(keys as TKey[]));
   }
 
   public abstract async load(keys: TKey[]): Promise<(TItem | Error)[]>;

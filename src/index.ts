@@ -1,9 +1,6 @@
 export { Loader } from './decorators';
 
-export {
-  DataLoaderInterceptor,
-  DataLoaderInterceptorProvider,
-} from './interceptors';
+export { DataLoaderInterceptor, DataLoaderInterceptorProvider } from './interceptors';
 
 export {
   Connection,
