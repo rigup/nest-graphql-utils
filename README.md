@@ -6,6 +6,10 @@
 
 A collection of utilities for building real-world GraphQL apps using [NestJS](https://nestjs.com/).
 
+* [Pagination](#pagination)
+* [Batch Loading](#batch-loading)
+* [Release Notes](#release-notes)
+
 ## Features
 
 - "Relay-style" pagination using connections, edges, and nodes that follows the [Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm).
@@ -205,3 +209,14 @@ Finally, we need to provide the `DataLoaderInterceptor` in order for the `Loader
 })
 export class AppModule {}
 ```
+
+## Release Notes
+
+#### v0.1.0
+* Initial release
+
+#### v0.1.1
+* Add `DataLoaderInterceptor` interceptor and `Loader` decorator to fix batch loading
+
+#### v0.2.0
+* Support for NestJS 7
