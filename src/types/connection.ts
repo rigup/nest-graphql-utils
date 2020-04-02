@@ -11,16 +11,10 @@ export interface IConnection<TNode> {
 }
 
 export interface IConnectionClass<TNode> {
-  new (
-    totalCount: number,
-    pageInfo: IPageInfo,
-    edges: IEdge<TNode>[],
-  ): IConnection<TNode>;
+  new (totalCount: number, pageInfo: IPageInfo, edges: IEdge<TNode>[]): IConnection<TNode>;
 }
 
-export const Connection = <TNode>(
-  TNodeClass: ClassType<TNode>,
-): IConnectionClass<TNode> => {
+export const Connection = <TNode>(TNodeClass: ClassType<TNode>): IConnectionClass<TNode> => {
   @ObjectType(`${TNodeClass.name}Edge`, {
     description: `Provides ${TNodeClass.name} item and a cursor to its position`,
   })

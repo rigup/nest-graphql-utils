@@ -1,7 +1,7 @@
 import { createConnection } from './createConnection';
 import { PaginationArgs } from './connection';
-import { TestConnection } from './testUtils';
-import { Cursor } from './cursor';
+import { TestConnection } from '../testUtils';
+import { Cursor } from '../utilities/cursor';
 
 describe(createConnection.name, () => {
   describe('no pagination args', () => {

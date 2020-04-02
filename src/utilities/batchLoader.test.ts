@@ -1,14 +1,12 @@
 import { BatchLoader } from './batchLoader';
-import { createTestData, TestNode } from './testUtils';
+import { createTestData, TestNode } from '../testUtils';
 
 const data = createTestData(50);
 
 class TestLoader extends BatchLoader<TestNode> {
   public async load(keys: number[]) {
     return keys.map(
-      key =>
-        data.find(item => item.id === key) ||
-        new Error(`No item found with key ${key}`),
+      key => data.find(item => item.id === key) || new Error(`No item found with key ${key}`),
     );
   }
 }

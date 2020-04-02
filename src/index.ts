@@ -1,15 +1,18 @@
-export { BatchLoader } from './batchLoader';
+export { Loader } from './decorators';
+
+export { DataLoaderInterceptor, DataLoaderInterceptorProvider } from './interceptors';
+
 export {
+  Connection,
+  createConnection,
   IConnection,
   IConnectionClass,
-  Connection,
-  PaginationArgs,
-} from './connection';
-export {
-  IPaginateArgs,
   ICreateConnectionOptions,
-  createConnection,
-} from './createConnection';
-export { Cursor } from './cursor';
-export { IEdge } from './edge';
-export { IPageInfo, PageInfo } from './pageInfo';
+  IEdge,
+  IPageInfo,
+  IPaginateArgs,
+  PageInfo,
+  PaginationArgs,
+} from './types';
+
+export { BatchLoader, Cursor } from './utilities';
