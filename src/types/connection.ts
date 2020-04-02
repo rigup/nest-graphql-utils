@@ -1,6 +1,7 @@
-import { ClassType, ObjectType, Field, Int, ArgsType } from 'type-graphql';
+import { ObjectType, Field, Int, ArgsType } from '@nestjs/graphql';
 import { Min } from 'class-validator';
 
+import { ClassType } from '../utilities';
 import { PageInfo, IPageInfo } from './pageInfo';
 import { IEdge } from './edge';
 
