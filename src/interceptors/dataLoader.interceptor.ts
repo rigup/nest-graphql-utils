@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 import { BatchLoader } from '../utilities/batchLoader';
 
-export const NEST_LOADER_CONTEXT_KEY = 'NEST_LOADER_CONTEXT_KEY';
+export const LOADER_ACCESSOR_CONTEXT_KEY = 'LOADER_ACCESSOR_CONTEXT_KEY';
 
 @Injectable()
 export class DataLoaderInterceptor implements NestInterceptor {
@@ -29,8 +29,8 @@ export class DataLoaderInterceptor implements NestInterceptor {
     const ctx: any = graphqlExecutionContext.getContext();
 
     // If loader accessor does not already exist on context, create it
-    if (ctx[NEST_LOADER_CONTEXT_KEY] === undefined) {
-      ctx[NEST_LOADER_CONTEXT_KEY] = async (type: string): Promise<BatchLoader<any, any>> => {
+    if (!ctx[LOADER_ACCESSOR_CONTEXT_KEY]) {
+      ctx[LOADER_ACCESSOR_CONTEXT_KEY] = async (type: string): Promise<BatchLoader<any, any>> => {
         if (ctx[type] === undefined) {
           try {
             ctx[type] = this.moduleRef.get<BatchLoader<any, any>>(type, {
