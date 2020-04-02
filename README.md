@@ -212,11 +212,11 @@ export class AppModule {}
 
 ## Release Notes
 
-#### v0.1.0
-* Initial release
+#### v0.2.0
+* Support for NestJS 7
 
 #### v0.1.1
 * Add `DataLoaderInterceptor` interceptor and `Loader` decorator to fix batch loading
 
-#### v0.2.0
-* Support for NestJS 7
+#### v0.1.0
+* Initial release
