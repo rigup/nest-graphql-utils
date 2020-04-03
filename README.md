@@ -212,6 +212,9 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.2.2
+* Update `Loader` decorator to work with Nest 7 changes to `createParamDecorator`
+
 #### 0.2.1
 * Fix `Connection.edges` field for Nest 7 support
 
