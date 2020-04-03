@@ -46,7 +46,7 @@ export const Connection = <TNode>(TNodeClass: ClassType<TNode>): IConnectionClas
     @Field(type => PageInfo)
     public pageInfo: PageInfo;
 
-    @Field(type => EdgeClass)
+    @Field(type => [EdgeClass])
     public edges: EdgeClass[];
   }
 
