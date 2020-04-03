@@ -212,11 +212,14 @@ export class AppModule {}
 
 ## Release Notes
 
-#### v0.2.0
+#### 0.2.1
+* Fix `Connection.edges` field for Nest 7 support
+
+#### 0.2.0
 * Support for NestJS 7
 
-#### v0.1.1
+#### 0.1.4
 * Add `DataLoaderInterceptor` interceptor and `Loader` decorator to fix batch loading
 
-#### v0.1.0
+#### 0.1.3
 * Initial release
