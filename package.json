@@ -1,6 +1,6 @@
 {
   "name": "nest-graphql-utils",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A collection of GraphQL utilities for NestJS apps",
   "keywords": [
     "nest",
@@ -26,9 +26,7 @@
     "test": "jest --watch",
     "test:cov": "jest --coverage",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run lint && npm run test:cov",
-    "version": "git add -A",
-    "postversion": "git push && git push --tags"
+    "prepublishOnly": "npm run lint && npm run test:cov"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

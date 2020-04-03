@@ -1,5 +1,10 @@
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { createParamDecorator, InternalServerErrorException } from '@nestjs/common';
+import {
+  createParamDecorator,
+  InternalServerErrorException,
+  ExecutionContext,
+} from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 import {
   DataLoaderInterceptor,
@@ -15,7 +20,8 @@ interface LoaderClass {
  * Use the loader accessor to obtain a BatchLoader instance based on type.
  * For more info on loader accessor, see dataLoader.interceptor.ts
  */
-export const Loader = createParamDecorator(async (data: LoaderClass, [_, __, ctx]) => {
+export const Loader = createParamDecorator(async (data: LoaderClass, context: ExecutionContext) => {
+  const ctx = GqlExecutionContext.create(context).getContext();
   const getBatchLoader = ctx[LOADER_ACCESSOR_CONTEXT_KEY];
   if (!getBatchLoader) {
     throw new InternalServerErrorException(`
