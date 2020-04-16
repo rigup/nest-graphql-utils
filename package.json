@@ -1,6 +1,6 @@
 {
   "name": "nest-graphql-utils",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "A collection of GraphQL utilities for NestJS apps",
   "keywords": [
     "nest",
