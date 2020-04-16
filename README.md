@@ -174,14 +174,16 @@ public async resolveList(@Parent() item: TodoItem) {
 We can use batch loading to avoid the N+1 query problem here. First, we need to define a new loader by extending `BatchLoader` and overriding the `load` method
 
 ```typescript
-import { BatchLoader } from 'nest-graphql-utils';
+import { DataLoaderFactory } from 'nest-graphql-utils';
 
 @Injectable()
-class TodoListLoader extends BatchLoader<TodoList> {
+class TodoListLoader implements DataLoaderFactory<TodoList> {
   constructor(private readonly service: TodoService) {}
 
-  public async load(keys: number[]) {
-    return await this.service.getListsByIds(keys);
+  create() {
+    return new DataLoader<number, TodoList>((keys: number[]) =>
+      this.service.getListsByIds(keys);
+    );
   }
 }
 ```
@@ -192,9 +194,9 @@ We can then update the `resolveList` method in our `TodoItemResolver` to use the
 @ResolveProperty('list', returns => TodoList)
 public async resolveList(
   @Parent() item: TodoItem,
-  @Loader(TodoListLoader) loader: TodoListLoader,
+  @Loader(TodoListLoader) loader: ReturnType<TodoListLoader['create']>,
 ) {
-  return await loader.loadOne(item.listId);
+  return await loader.load(item.listId);
 }
 ```
 
@@ -211,6 +213,9 @@ export class AppModule {}
 ```
 
 ## Release Notes
+
+#### 0.3.0
+* Replace `BatchLoader` with `DataLoaderFactory` to only load per request
 
 #### 0.2.2
 * Update `Loader` decorator to work with Nest 7 changes to `createParamDecorator`

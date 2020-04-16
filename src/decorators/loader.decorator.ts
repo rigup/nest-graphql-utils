@@ -10,10 +10,10 @@ import {
   DataLoaderInterceptor,
   LOADER_ACCESSOR_CONTEXT_KEY,
 } from '../interceptors/dataLoader.interceptor';
-import { BatchLoader } from '../utilities/batchLoader';
+import { DataLoaderFactory } from '../utilities/dataLoaderFactory';
 
 interface LoaderClass {
-  new (...args: any[]): BatchLoader<any, any>;
+  new (...args: any[]): DataLoaderFactory<any, any>;
 }
 
 /**

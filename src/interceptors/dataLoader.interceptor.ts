@@ -6,10 +6,10 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ContextId, ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
+import { ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
-import { BatchLoader } from '../utilities/batchLoader';
+import { DataLoaderFactory } from '../utilities/dataLoaderFactory';
 
 export const LOADER_ACCESSOR_CONTEXT_KEY = 'LOADER_ACCESSOR_CONTEXT_KEY';
 
@@ -31,19 +31,19 @@ export class DataLoaderInterceptor implements NestInterceptor {
     // If loader accessor does not already exist on context, create it
     if (!ctx[LOADER_ACCESSOR_CONTEXT_KEY]) {
       ctx[LOADER_ACCESSOR_CONTEXT_KEY] = {
-        contextId: this.getContextId(ctx),
-        getLoader: async (type: string): Promise<BatchLoader<any, any>> => {
+        contextId: ContextIdFactory.create(),
+        getLoader: async (type: string): Promise<DataLoaderFactory<any, any>> => {
           if (ctx[type] === undefined) {
             try {
               ctx[type] = (
-                await this.moduleRef.resolve<BatchLoader<any, any>>(
+                await this.moduleRef.resolve<DataLoaderFactory<any, any>>(
                   type,
                   ctx[LOADER_ACCESSOR_CONTEXT_KEY].contextId,
                   {
                     strict: false,
                   },
                 )
-              ).generateDataLoader();
+              ).create();
             } catch (e) {
               throw new InternalServerErrorException(
                 `The loader ${type} is not provided: ${e.message}`,
@@ -57,18 +57,6 @@ export class DataLoaderInterceptor implements NestInterceptor {
     }
 
     return next.handle();
-  }
-
-  private getContextId(ctx: any): ContextId {
-    const GQL_CONTEXT_ID = Object.getOwnPropertySymbols(ctx).find(
-      sym => sym.toString() === 'Symbol(GQL_CONTEXT_ID)',
-    );
-
-    if (GQL_CONTEXT_ID && ctx[GQL_CONTEXT_ID]) {
-      return ctx[GQL_CONTEXT_ID];
-    }
-
-    return ContextIdFactory.create();
   }
 }
 
