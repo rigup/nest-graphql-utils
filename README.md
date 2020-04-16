@@ -215,7 +215,7 @@ export class AppModule {}
 ## Release Notes
 
 #### 0.3.0
-* Replace `BatchLoader` with `DataLoaderFactory` to only load per request
+* Replace `BatchLoader` with `DataLoaderFactory` to only load per request. Default key type changed to string
 
 #### 0.2.2
 * Update `Loader` decorator to work with Nest 7 changes to `createParamDecorator`

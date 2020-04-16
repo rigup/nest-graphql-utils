@@ -4,7 +4,7 @@ import DataLoader from 'dataloader';
 
 const data = createTestData(50);
 
-class TestLoader implements DataLoaderFactory<TestNode> {
+class TestLoader implements DataLoaderFactory<TestNode, number> {
   create() {
     return new DataLoader<number, TestNode>(async (keys: number[]) => {
       return keys.map(key => data.find(item => item.id === key));
