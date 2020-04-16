@@ -6,10 +6,10 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
+import { ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
-import { BatchLoader } from '../utilities/batchLoader';
+import { DataLoaderFactory } from '../utilities/dataLoaderFactory';
 
 export const LOADER_ACCESSOR_CONTEXT_KEY = 'LOADER_ACCESSOR_CONTEXT_KEY';
 
@@ -30,20 +30,29 @@ export class DataLoaderInterceptor implements NestInterceptor {
 
     // If loader accessor does not already exist on context, create it
     if (!ctx[LOADER_ACCESSOR_CONTEXT_KEY]) {
-      ctx[LOADER_ACCESSOR_CONTEXT_KEY] = async (type: string): Promise<BatchLoader<any, any>> => {
-        if (ctx[type] === undefined) {
-          try {
-            ctx[type] = this.moduleRef.get<BatchLoader<any, any>>(type, {
-              strict: false,
-            });
-          } catch (e) {
-            throw new InternalServerErrorException(
-              `The loader ${type} is not provided: ${e.message}`,
-            );
+      ctx[LOADER_ACCESSOR_CONTEXT_KEY] = {
+        contextId: ContextIdFactory.create(),
+        getLoader: async (type: string): Promise<DataLoaderFactory<any, any>> => {
+          if (ctx[type] === undefined) {
+            try {
+              ctx[type] = (
+                await this.moduleRef.resolve<DataLoaderFactory<any, any>>(
+                  type,
+                  ctx[LOADER_ACCESSOR_CONTEXT_KEY].contextId,
+                  {
+                    strict: false,
+                  },
+                )
+              ).create();
+            } catch (e) {
+              throw new InternalServerErrorException(
+                `The loader ${type} is not provided: ${e.message}`,
+              );
+            }
           }
-        }
 
-        return ctx[type];
+          return ctx[type];
+        },
       };
     }
 

@@ -15,4 +15,4 @@ export {
   PaginationArgs,
 } from './types';
 
-export { BatchLoader, Cursor } from './utilities';
+export { DataLoaderFactory, Cursor } from './utilities';
