@@ -22,12 +22,12 @@ interface LoaderClass {
  */
 export const Loader = createParamDecorator(async (data: LoaderClass, context: ExecutionContext) => {
   const ctx = GqlExecutionContext.create(context).getContext();
-  const getBatchLoader = ctx[LOADER_ACCESSOR_CONTEXT_KEY];
-  if (!getBatchLoader) {
+  const interceptor = ctx[LOADER_ACCESSOR_CONTEXT_KEY];
+  if (!interceptor) {
     throw new InternalServerErrorException(`
             You should provide interceptor ${DataLoaderInterceptor.name} globally with ${APP_INTERCEPTOR}
           `);
   }
 
-  return await getBatchLoader(data.name);
+  return await interceptor.getLoader(data.name);
 });
