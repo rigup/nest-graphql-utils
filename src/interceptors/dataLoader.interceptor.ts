@@ -6,7 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
+import { ContextId, ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
 import { BatchLoader } from '../utilities/batchLoader';
@@ -31,7 +31,7 @@ export class DataLoaderInterceptor implements NestInterceptor {
     // If loader accessor does not already exist on context, create it
     if (!ctx[LOADER_ACCESSOR_CONTEXT_KEY]) {
       ctx[LOADER_ACCESSOR_CONTEXT_KEY] = {
-        contextId: ContextIdFactory.create(),
+        contextId: this.getContextId(ctx),
         getLoader: async (type: string): Promise<BatchLoader<any, any>> => {
           if (ctx[type] === undefined) {
             try {
@@ -57,6 +57,18 @@ export class DataLoaderInterceptor implements NestInterceptor {
     }
 
     return next.handle();
+  }
+
+  private getContextId(ctx: any): ContextId {
+    const GQL_CONTEXT_ID = Object.getOwnPropertySymbols(ctx).find(
+      sym => sym.toString() === 'Symbol(GQL_CONTEXT_ID)',
+    );
+
+    if (GQL_CONTEXT_ID && ctx[GQL_CONTEXT_ID]) {
+      return ctx[GQL_CONTEXT_ID];
+    }
+
+    return ContextIdFactory.create();
   }
 }
 
