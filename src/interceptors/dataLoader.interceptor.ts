@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ContextIdFactory, ModuleRef, APP_INTERCEPTOR } from '@nestjs/core';
+import { REQUEST_CONTEXT_ID } from '@nestjs/core/router/request/request-constants';
 import { Observable } from 'rxjs';
 
 import { DataLoaderFactory } from '../utilities/dataLoaderFactory';
@@ -31,7 +32,7 @@ export class DataLoaderInterceptor implements NestInterceptor {
     // If loader accessor does not already exist on context, create it
     if (!ctx[LOADER_ACCESSOR_CONTEXT_KEY]) {
       ctx[LOADER_ACCESSOR_CONTEXT_KEY] = {
-        contextId: ContextIdFactory.create(),
+        contextId: ctx[REQUEST_CONTEXT_ID] || ContextIdFactory.create(),
         getLoader: async (type: string): Promise<DataLoaderFactory<any, any>> => {
           if (ctx[type] === undefined) {
             try {

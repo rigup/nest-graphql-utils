@@ -1,6 +1,6 @@
 {
   "name": "nest-graphql-utils",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A collection of GraphQL utilities for NestJS apps",
   "keywords": [
     "nest",
@@ -37,12 +37,12 @@
   "peerDependencies": {
     "@nestjs/common": "^7.0.7",
     "@nestjs/core": "^7.0.7",
-    "@nestjs/graphql": "^7.1.5"
+    "@nestjs/graphql": "^7.3.1"
   },
   "devDependencies": {
     "@nestjs/common": "^7.0.7",
     "@nestjs/core": "^7.0.7",
-    "@nestjs/graphql": "^7.1.5",
+    "@nestjs/graphql": "^7.3.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "25.1.1",
     "@types/node": "^13.7.7",
