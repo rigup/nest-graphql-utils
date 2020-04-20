@@ -11,12 +11,20 @@ export interface IConnection<TNode> {
   edges: IEdge<TNode>[];
 }
 
+export interface IConnectionOptions {
+  connectionName?: string;
+  edgeName?: string;
+}
+
 export interface IConnectionClass<TNode> {
   new (totalCount: number, pageInfo: IPageInfo, edges: IEdge<TNode>[]): IConnection<TNode>;
 }
 
-export const Connection = <TNode>(TNodeClass: ClassType<TNode>): IConnectionClass<TNode> => {
-  @ObjectType(`${TNodeClass.name}Edge`, {
+export const Connection = <TNode>(
+  TNodeClass: ClassType<TNode>,
+  options?: IConnectionOptions,
+): IConnectionClass<TNode> => {
+  @ObjectType(options?.edgeName || `${TNodeClass.name}Edge`, {
     description: `Provides ${TNodeClass.name} item and a cursor to its position`,
   })
   class EdgeClass implements IEdge<TNode> {
@@ -27,7 +35,7 @@ export const Connection = <TNode>(TNodeClass: ClassType<TNode>): IConnectionClas
     public node: TNode;
   }
 
-  @ObjectType(`${TNodeClass.name}Connection`, {
+  @ObjectType(options?.connectionName || `${TNodeClass.name}Connection`, {
     isAbstract: true,
     description: `Provides paginated ${TNodeClass.name} data`,
   })
