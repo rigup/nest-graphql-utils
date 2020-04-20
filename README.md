@@ -214,6 +214,9 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.3.1
+* Support request scoped injection in loaders and bump peer dependencies
+
 #### 0.3.0
 * Replace `BatchLoader` with `DataLoaderFactory` to only load per request. Default key type changed to string
 
