@@ -1,6 +1,6 @@
 import { createConnection } from './createConnection';
 import { PaginationArgs } from './connection';
-import { TestConnection } from '../testUtils';
+import { TestConnection, TestNode } from '../testUtils';
 import { Cursor } from '../utilities/cursor';
 
 describe(createConnection.name, () => {
@@ -100,6 +100,44 @@ describe(createConnection.name, () => {
           return Promise.resolve([[], 0]);
         },
       });
+    });
+  });
+
+  describe('returned cursors', () => {
+    it('sets the correct "startCursor"', async () => {
+      const nodes = [...Array(5).keys()].map(k => new TestNode(k));
+      const paginationArgs = new PaginationArgs();
+      paginationArgs.after = Cursor.create(TestConnection.name, 2);
+      paginationArgs.first = 5;
+
+      const connection = await createConnection({
+        paginationArgs,
+        connectionClass: TestConnection,
+        paginate: args => {
+          return Promise.resolve([nodes, nodes.length]);
+        },
+      });
+
+      const expectedCursor = Cursor.create(TestConnection.name, 3);
+      expect(connection.pageInfo.startCursor).toEqual(expectedCursor);
+    });
+
+    it('sets the correct "endCursor"', async () => {
+      const nodes = [...Array(5).keys()].map(k => new TestNode(k));
+      const paginationArgs = new PaginationArgs();
+      paginationArgs.after = Cursor.create(TestConnection.name, 2);
+      paginationArgs.first = 5;
+
+      const connection = await createConnection({
+        paginationArgs,
+        connectionClass: TestConnection,
+        paginate: args => {
+          return Promise.resolve([nodes, nodes.length]);
+        },
+      });
+
+      const expectedCursor = Cursor.create(TestConnection.name, 7);
+      expect(connection.pageInfo.endCursor).toEqual(expectedCursor);
     });
   });
 });
