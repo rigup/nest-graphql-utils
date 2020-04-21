@@ -40,7 +40,7 @@ export const createConnection = async <TNode>({
 
   const pageInfo: IPageInfo = {
     startCursor: Cursor.create(connectionClass.name, offset),
-    endCursor: Cursor.create(connectionClass.name, offset + nodes.length),
+    endCursor: Cursor.create(connectionClass.name, offset + (nodes.length - 1)),
     hasPreviousPage: offset > 0,
     hasNextPage: offset + nodes.length < totalCount,
   };
