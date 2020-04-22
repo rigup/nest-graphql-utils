@@ -84,6 +84,10 @@ export class PaginationArgs {
   public last?: number;
 
   @Min(0)
-  @Field(type => Int, { nullable: true })
+  @Field(type => Int, {
+    nullable: true,
+    description:
+      'Offset to use if neither after or before are provided. Otherwise, they will take precedence.',
+  })
   public offset?: number;
 }
