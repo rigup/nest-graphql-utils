@@ -80,12 +80,10 @@ export class PaginationArgs {
   public before?: string;
 
   @Min(0)
-  @Field(type => Int, {
-    nullable: true,
-  })
+  @Field(type => Int, { nullable: true })
   public last?: number;
 
   @Min(0)
-  @Field(type => Int)
+  @Field(type => Int, { nullable: true })
   public offset?: number;
 }
