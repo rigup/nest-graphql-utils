@@ -1,3 +1,3 @@
-export * from './extendedField.decorator';
 export * from './extendedObjectType.decorator';
+export * from './externalField.decorator';
 export * from './loader.decorator';

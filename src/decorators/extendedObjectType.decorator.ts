@@ -1,10 +1,15 @@
-import { Directive, ObjectType } from '@nestjs/graphql';
+import { Directive, ObjectType, ObjectTypeOptions } from '@nestjs/graphql';
 import { applyDecorators } from '@nestjs/common';
 
-export const ExtendedObjectType = ({ keyFields, name }: { keyFields: string; name?: string }) => {
+interface ExtendedObjectTypeOptions extends ObjectTypeOptions {
+  keyFields: string;
+  name?: string;
+}
+
+export const ExtendedObjectType = ({ keyFields, name, ...options }: ExtendedObjectTypeOptions) => {
   return applyDecorators(
     Directive('@extends'),
     Directive(`@key(fields: "${keyFields}")`),
-    ObjectType(name),
+    ObjectType(name, options),
   );
 };
