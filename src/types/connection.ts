@@ -69,17 +69,25 @@ export class PaginationArgs {
   })
   public after?: string;
 
-  @Field(type => Int, { nullable: true })
   @Min(0)
+  @Field(type => Int, { nullable: true })
   public first?: number;
 
-  @Field({ nullable: true })
-  public before?: string;
-
-  @Field(type => Int, {
+  @Field({
     nullable: true,
     description: 'Cursor to the item before which last n items will be taken',
   })
+  public before?: string;
+
   @Min(0)
+  @Field(type => Int, { nullable: true })
   public last?: number;
+
+  @Min(0)
+  @Field(type => Int, {
+    nullable: true,
+    description:
+      'Offset to use if neither after or before are provided. Otherwise, they will take precedence.',
+  })
+  public offset?: number;
 }

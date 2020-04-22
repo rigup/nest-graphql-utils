@@ -21,7 +21,7 @@ export const createConnection = async <TNode>({
   defaultPageSize = 20,
   paginate,
 }: ICreateConnectionOptions<TNode>): Promise<IConnection<TNode>> => {
-  let offset = 0;
+  let offset = paginationArgs.offset || 0;
   let limit = paginationArgs.first || defaultPageSize;
 
   if (paginationArgs.after) {

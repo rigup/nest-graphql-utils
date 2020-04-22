@@ -4,8 +4,8 @@ import { TestConnection, TestNode } from '../testUtils';
 import { Cursor } from '../utilities/cursor';
 
 describe(createConnection.name, () => {
-  describe('no pagination args', () => {
-    it('uses defaults', async () => {
+  describe('defaults', () => {
+    it('uses all defaults if no pagination args provided', async () => {
       const paginationArgs = new PaginationArgs();
 
       await createConnection({
@@ -19,25 +19,55 @@ describe(createConnection.name, () => {
         },
       });
     });
-  });
 
-  describe('forward pagination', () => {
-    it('uses default offset if "after" not provided', async () => {
+    it('uses provided offset if "after" not provided', async () => {
       const paginationArgs = new PaginationArgs();
-      paginationArgs.first = 10;
+      paginationArgs.offset = 5;
 
       await createConnection({
         paginationArgs,
         connectionClass: TestConnection,
         paginate: args => {
-          expect(args.offset).toEqual(0);
-          expect(args.limit).toEqual(10);
+          expect(args.offset).toEqual(5);
           return Promise.resolve([[], 0]);
         },
       });
     });
 
-    it('uses default page size if "first" not provided', async () => {
+    it('overrides provided offset if "after" is provided', async () => {
+      const paginationArgs = new PaginationArgs();
+      paginationArgs.offset = 5;
+      paginationArgs.after = Cursor.create(TestConnection.name, 10);
+
+      await createConnection({
+        paginationArgs,
+        connectionClass: TestConnection,
+        paginate: args => {
+          expect(args.offset).toEqual(11);
+          return Promise.resolve([[], 0]);
+        },
+      });
+    });
+
+    it('overrides provided offset if "before" is provided', async () => {
+      const paginationArgs = new PaginationArgs();
+      paginationArgs.offset = 5;
+      paginationArgs.before = Cursor.create(TestConnection.name, 30);
+      paginationArgs.last = 10;
+
+      await createConnection({
+        paginationArgs,
+        connectionClass: TestConnection,
+        paginate: args => {
+          expect(args.offset).toEqual(20);
+          return Promise.resolve([[], 0]);
+        },
+      });
+    });
+  });
+
+  describe('forward pagination', () => {
+    it('uses default offset if "after" and "offset" not provided', async () => {
       const paginationArgs = new PaginationArgs();
       paginationArgs.first = 10;
 

@@ -214,6 +214,9 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.3.5
+* Add `offset` pagination argument
+
 #### 0.3.4
 * Export all decorators
 
