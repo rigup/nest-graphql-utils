@@ -214,6 +214,12 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.3.3
+* Add federation decorators
+
+#### 0.3.2
+* Fix endCursor pointing to next cursor rather than last cursor
+
 #### 0.3.1
 * Support request scoped injection in loaders and bump peer dependencies
 * Allow custom naming of connection and edge
