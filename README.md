@@ -214,6 +214,9 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.3.4
+* Export all decorators
+
 #### 0.3.3
 * Add federation decorators
 
