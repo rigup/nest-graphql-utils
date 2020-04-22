@@ -1,4 +1,4 @@
-export { Loader } from './decorators';
+export * from './decorators';
 
 export { DataLoaderInterceptor, DataLoaderInterceptorProvider } from './interceptors';
 
