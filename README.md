@@ -214,6 +214,9 @@ export class AppModule {}
 
 ## Release Notes
 
+#### 0.4.0
+* Remove `connectionClass` from `createConnection` options
+
 #### 0.3.5
 * Add `offset` pagination argument
 
