@@ -1,6 +1,6 @@
 import { IPageInfo } from './pageInfo';
 import { Cursor } from '../utilities/cursor';
-import { IConnectionClass, PaginationArgs, IConnection } from './connection';
+import { PaginationArgs, IConnection } from './connection';
 import { IEdge } from './edge';
 
 export interface IPaginateArgs {
@@ -10,14 +10,12 @@ export interface IPaginateArgs {
 
 export interface ICreateConnectionOptions<TNode> {
   paginationArgs: PaginationArgs;
-  connectionClass: IConnectionClass<TNode>;
   defaultPageSize?: number;
   paginate(args: IPaginateArgs): Promise<[TNode[], number]>;
 }
 
 export const createConnection = async <TNode>({
   paginationArgs,
-  connectionClass,
   defaultPageSize = 20,
   paginate,
 }: ICreateConnectionOptions<TNode>): Promise<IConnection<TNode>> => {
@@ -39,18 +37,22 @@ export const createConnection = async <TNode>({
   const [nodes, totalCount] = await paginate({ offset, limit });
 
   const pageInfo: IPageInfo = {
-    startCursor: Cursor.create(connectionClass.name, offset),
-    endCursor: Cursor.create(connectionClass.name, offset + (nodes.length - 1)),
+    startCursor: Cursor.create(offset),
+    endCursor: Cursor.create(offset + (nodes.length - 1)),
     hasPreviousPage: offset > 0,
     hasNextPage: offset + nodes.length < totalCount,
   };
 
   const edges: IEdge<TNode>[] = nodes.map((node, index) => {
     return {
-      cursor: Cursor.create(connectionClass.name, offset + index),
+      cursor: Cursor.create(offset + index),
       node,
     };
   });
 
-  return new connectionClass(totalCount, pageInfo, edges);
+  return {
+    totalCount,
+    pageInfo,
+    edges,
+  };
 };
