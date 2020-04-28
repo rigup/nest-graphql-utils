@@ -1,6 +1,6 @@
 import { createConnection } from './createConnection';
 import { PaginationArgs } from './connection';
-import { TestConnection, TestNode } from '../testUtils';
+import { TestNode } from '../testUtils';
 import { Cursor } from '../utilities/cursor';
 
 describe(createConnection.name, () => {
@@ -10,7 +10,6 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         defaultPageSize: 10,
         paginate: args => {
           expect(args.offset).toEqual(0);
@@ -26,7 +25,6 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(5);
           return Promise.resolve([[], 0]);
@@ -37,11 +35,10 @@ describe(createConnection.name, () => {
     it('overrides provided offset if "after" is provided', async () => {
       const paginationArgs = new PaginationArgs();
       paginationArgs.offset = 5;
-      paginationArgs.after = Cursor.create(TestConnection.name, 10);
+      paginationArgs.after = Cursor.create(10);
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(11);
           return Promise.resolve([[], 0]);
@@ -52,12 +49,11 @@ describe(createConnection.name, () => {
     it('overrides provided offset if "before" is provided', async () => {
       const paginationArgs = new PaginationArgs();
       paginationArgs.offset = 5;
-      paginationArgs.before = Cursor.create(TestConnection.name, 30);
+      paginationArgs.before = Cursor.create(30);
       paginationArgs.last = 10;
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(20);
           return Promise.resolve([[], 0]);
@@ -73,7 +69,6 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(0);
           expect(args.limit).toEqual(10);
@@ -84,12 +79,11 @@ describe(createConnection.name, () => {
 
     it('uses "after" and "first"', async () => {
       const paginationArgs = new PaginationArgs();
-      paginationArgs.after = Cursor.create(TestConnection.name, 10);
+      paginationArgs.after = Cursor.create(10);
       paginationArgs.first = 10;
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(11);
           expect(args.limit).toEqual(10);
@@ -102,12 +96,11 @@ describe(createConnection.name, () => {
   describe('backward pagination', () => {
     it('uses "before" and "last"', async () => {
       const paginationArgs = new PaginationArgs();
-      paginationArgs.before = Cursor.create(TestConnection.name, 30);
+      paginationArgs.before = Cursor.create(30);
       paginationArgs.last = 10;
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(20);
           expect(args.limit).toEqual(10);
@@ -118,12 +111,11 @@ describe(createConnection.name, () => {
 
     it('handles "before" - "limit" < 0', async () => {
       const paginationArgs = new PaginationArgs();
-      paginationArgs.before = Cursor.create(TestConnection.name, 10);
+      paginationArgs.before = Cursor.create(10);
       paginationArgs.last = 20;
 
       await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           expect(args.offset).toEqual(0);
           expect(args.limit).toEqual(10);
@@ -137,36 +129,34 @@ describe(createConnection.name, () => {
     it('sets the correct "startCursor"', async () => {
       const nodes = [...Array(5).keys()].map(k => new TestNode(k));
       const paginationArgs = new PaginationArgs();
-      paginationArgs.after = Cursor.create(TestConnection.name, 2);
+      paginationArgs.after = Cursor.create(2);
       paginationArgs.first = 5;
 
       const connection = await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           return Promise.resolve([nodes, nodes.length]);
         },
       });
 
-      const expectedCursor = Cursor.create(TestConnection.name, 3);
+      const expectedCursor = Cursor.create(3);
       expect(connection.pageInfo.startCursor).toEqual(expectedCursor);
     });
 
     it('sets the correct "endCursor"', async () => {
       const nodes = [...Array(5).keys()].map(k => new TestNode(k));
       const paginationArgs = new PaginationArgs();
-      paginationArgs.after = Cursor.create(TestConnection.name, 2);
+      paginationArgs.after = Cursor.create(2);
       paginationArgs.first = 5;
 
       const connection = await createConnection({
         paginationArgs,
-        connectionClass: TestConnection,
         paginate: args => {
           return Promise.resolve([nodes, nodes.length]);
         },
       });
 
-      const expectedCursor = Cursor.create(TestConnection.name, 7);
+      const expectedCursor = Cursor.create(7);
       expect(connection.pageInfo.endCursor).toEqual(expectedCursor);
     });
   });
