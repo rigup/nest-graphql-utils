@@ -22,8 +22,8 @@ Assume we have the following GraphQL schema
 ```typescript
 @ObjectType()
 class TodoList {
-  @Field(type => Int)
-  public id: number;
+  @Field(type => ID)
+  public id: string;
 
   @Field()
   public name: string;
@@ -34,8 +34,8 @@ class TodoList {
 
 @ObjectType()
 class TodoItem {
-  @Field(type => Int)
-  public id: number;
+  @Field(type => ID)
+  public id: string;
 
   @Field()
   public description: string;
@@ -48,9 +48,9 @@ class TodoItem {
 class TodoItemResolver {
   constructor(private readonly service: TodoService) {}
 
-  @Query(returns => [TodoItem], { name: 'items' })
-  public async queryItems() {
-    return await this.service.getAllItems();
+  @Query(returns => [TodoItem])
+  public async items() {
+    return this.service.getAllItems();
   }
 }
 ```
@@ -67,8 +67,8 @@ class TodoItemConnection extends Connection(TodoItem) {}
 
 @ObjectType()
 class TodoList {
-  @Field(type => Int)
-  public id: number;
+  @Field(type => ID)
+  public id: string;
 
   @Field()
   public name: string;
@@ -87,11 +87,10 @@ import { createConnection, PaginationArgs } from 'nest-graphql-utils';
 class TodoItemResolver {
   constructor(private readonly service: TodoService) {}
 
-  @Query(returns => [TodoItem], { name: 'items' })
-  public async queryItems(@Args() paginationArgs: PaginationArgs) {
-    return await createConnection({
+  @Query(returns => TodoItemConnection)
+  public async items(@Args() paginationArgs: PaginationArgs): Promise<TodoItemConnection> {
+    return createConnection({
       paginationArgs,
-      connectionClass: TodoItemConnection,
       paginate: args => this.service.paginateItems(args.offset, args.limit),
     });
   }
@@ -162,12 +161,12 @@ Which might return a result such as
 
 ## Batch Loading
 
-Let's add a property resolver to our `TodoItemResolver`
+Let's add a field resolver to our `TodoItemResolver`
 
 ```typescript
-@ResolveProperty('list', returns => TodoList)
-public async resolveList(@Parent() item: TodoItem) {
-  return await this.service.getListById(item.listId);
+@ResolveField(returns => TodoList)
+public async list(@Parent() item: TodoItem) {
+  return this.service.getListById(item.listId);
 }
 ```
 
@@ -191,12 +190,12 @@ class TodoListLoader implements DataLoaderFactory<TodoList> {
 We can then update the `resolveList` method in our `TodoItemResolver` to use the new loader
 
 ```typescript
-@ResolveProperty('list', returns => TodoList)
-public async resolveList(
+@ResolveField(returns => TodoList)
+public async list(
   @Parent() item: TodoItem,
   @Loader(TodoListLoader) loader: ReturnType<TodoListLoader['create']>,
 ) {
-  return await loader.load(item.listId);
+  return loader.load(item.listId);
 }
 ```
 
