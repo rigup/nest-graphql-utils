@@ -1,10 +1,7 @@
-name: Build and Test 2
+name: Build and Test
 
-on: # rebuild any PRs and master branch changes
+on: # only run on PRs
   pull_request:
-  push:
-    branches:
-      - master
 
 jobs:
   build-and-test:
@@ -13,6 +10,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
       - name: Install dependencies
         run: npm ci
