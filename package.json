@@ -13,6 +13,9 @@
   "bugs": "https://github.com/rigup/nest-graphql-utils/issues",
   "author": "RigUp (https://www.rigup.com)",
   "license": "MIT",
+  "engines": {
+    "node": ">10"
+  },
   "files": [
     "dist/**/*"
   ],
