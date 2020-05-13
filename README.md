@@ -1,4 +1,4 @@
-![CircleCI](https://img.shields.io/circleci/build/github/rigup/nest-graphql-utils?token=a201964cfcb6eb73e62992f87532be1c1090c924)
+![Build status](https://img.shields.io/github/workflow/status/rigup/nest-graphql-utils/Publish%20to%20NPM)
 ![NPM version](https://img.shields.io/npm/v/nest-graphql-utils)
 ![License](https://img.shields.io/npm/l/nest-graphql-utils)
 
