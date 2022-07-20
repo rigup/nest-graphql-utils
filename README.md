@@ -213,6 +213,9 @@ export class AppModule {}
 
 ## Release Notes
 
+### 1.0.0
+* Support Nest `8.4.4`
+
 #### 0.4.0
 * Remove `connectionClass` from `createConnection` options
 
