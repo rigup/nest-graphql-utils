@@ -11,7 +11,7 @@ describe(createConnection.name, () => {
       await createConnection({
         paginationArgs,
         defaultPageSize: 10,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(0);
           expect(args.limit).toEqual(10);
           return Promise.resolve([[], 0]);
@@ -25,7 +25,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(5);
           return Promise.resolve([[], 0]);
         },
@@ -39,7 +39,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(11);
           return Promise.resolve([[], 0]);
         },
@@ -54,7 +54,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(20);
           return Promise.resolve([[], 0]);
         },
@@ -69,7 +69,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(0);
           expect(args.limit).toEqual(10);
           return Promise.resolve([[], 0]);
@@ -84,7 +84,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(11);
           expect(args.limit).toEqual(10);
           return Promise.resolve([[], 0]);
@@ -101,7 +101,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(20);
           expect(args.limit).toEqual(10);
           return Promise.resolve([[], 0]);
@@ -116,7 +116,7 @@ describe(createConnection.name, () => {
 
       await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           expect(args.offset).toEqual(0);
           expect(args.limit).toEqual(10);
           return Promise.resolve([[], 0]);
@@ -127,14 +127,14 @@ describe(createConnection.name, () => {
 
   describe('returned cursors', () => {
     it('sets the correct "startCursor"', async () => {
-      const nodes = [...Array(5).keys()].map(k => new TestNode(k));
+      const nodes = [...Array(5).keys()].map((k) => new TestNode(k));
       const paginationArgs = new PaginationArgs();
       paginationArgs.after = Cursor.create(2);
       paginationArgs.first = 5;
 
       const connection = await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           return Promise.resolve([nodes, nodes.length]);
         },
       });
@@ -144,14 +144,14 @@ describe(createConnection.name, () => {
     });
 
     it('sets the correct "endCursor"', async () => {
-      const nodes = [...Array(5).keys()].map(k => new TestNode(k));
+      const nodes = [...Array(5).keys()].map((k) => new TestNode(k));
       const paginationArgs = new PaginationArgs();
       paginationArgs.after = Cursor.create(2);
       paginationArgs.first = 5;
 
       const connection = await createConnection({
         paginationArgs,
-        paginate: args => {
+        paginate: (args) => {
           return Promise.resolve([nodes, nodes.length]);
         },
       });

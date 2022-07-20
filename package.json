@@ -1,6 +1,6 @@
 {
   "name": "nest-graphql-utils",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "A collection of GraphQL utilities for NestJS apps",
   "keywords": [
     "nest",
@@ -33,35 +33,37 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "class-validator": "^0.11.0",
-    "dataloader": "^2.0.0",
+    "class-validator": "^0.13.2",
+    "dataloader": "^2.1.0",
     "reflect-metadata": "^0.1.13"
   },
   "peerDependencies": {
-    "@nestjs/common": "^7.0.7",
-    "@nestjs/core": "^7.0.7",
-    "@nestjs/graphql": "^7.3.1"
+    "@nestjs/common": "^8.4.4",
+    "@nestjs/core": "^8.4.4",
+    "@nestjs/graphql": "^10.0.11"
   },
   "devDependencies": {
-    "@nestjs/common": "^7.0.7",
-    "@nestjs/core": "^7.0.7",
-    "@nestjs/graphql": "^7.3.1",
+    "@nestjs/common": "^8.4.4",
+    "@nestjs/core": "^8.4.4",
+    "@nestjs/graphql": "^10.0.11",
     "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "25.1.1",
-    "@types/node": "^13.7.7",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-prettier": "^3.1.2",
-    "graphql": "^14.6.0",
-    "jest": "^25.1.0",
-    "lint-staged": "^10.0.8",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.2",
-    "ts-jest": "25.1.0",
-    "typescript": "^3.7.4"
+    "@types/jest": "24.0.18",
+    "@types/node": "^16.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "graphql": "^15.8.0",
+    "jest": "^26.4.2",
+    "lint-staged": "^12.3.8",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.0",
+    "rxjs": "^7.1.0",
+    "ts-jest": "26.4.2",
+    "ts-morph": "^14.0.0",
+    "typescript": "^4.6.4"
   },
   "jest": {
     "moduleFileExtensions": [

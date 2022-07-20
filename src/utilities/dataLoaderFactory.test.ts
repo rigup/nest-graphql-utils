@@ -7,7 +7,7 @@ const data = createTestData(50);
 class TestLoader implements DataLoaderFactory<TestNode, number> {
   create() {
     return new DataLoader<number, TestNode>(async (keys: number[]) => {
-      return keys.map(key => data.find(item => item.id === key));
+      return keys.map((key) => data.find((item) => item.id === key));
     });
   }
 }
@@ -28,7 +28,7 @@ describe('DataLoaderFactory', () => {
     const ids = [1, 2, 3, 4, 5];
     const items = await loader.loadMany(ids);
 
-    const loadedIds = items.map(item => {
+    const loadedIds = items.map((item) => {
       if (item instanceof TestNode) {
         return item.id;
       } else {
@@ -43,7 +43,7 @@ describe('DataLoaderFactory', () => {
     const ids = [1, 2, 3, 4, 1000];
     const items = await loader.loadMany(ids);
 
-    const notFound = items.filter(item => item === undefined);
+    const notFound = items.filter((item) => item === undefined);
     expect(notFound.length).toEqual(1);
   });
 });
