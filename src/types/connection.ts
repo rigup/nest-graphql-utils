@@ -31,7 +31,7 @@ export const Connection = <TNode>(
     @Field({ description: `The position of this ${TNodeClass.name} item` })
     public cursor: string;
 
-    @Field(type => TNodeClass)
+    @Field((type) => TNodeClass)
     public node: TNode;
   }
 
@@ -46,15 +46,15 @@ export const Connection = <TNode>(
       this.edges = edges;
     }
 
-    @Field(type => Int, {
+    @Field((type) => Int, {
       description: `Total number of ${TNodeClass.name} items`,
     })
     public totalCount: number;
 
-    @Field(type => PageInfo)
+    @Field((type) => PageInfo)
     public pageInfo: PageInfo;
 
-    @Field(type => [EdgeClass])
+    @Field((type) => [EdgeClass])
     public edges: EdgeClass[];
   }
 
@@ -70,7 +70,7 @@ export class PaginationArgs {
   public after?: string;
 
   @Min(0)
-  @Field(type => Int, { nullable: true })
+  @Field((type) => Int, { nullable: true })
   public first?: number;
 
   @Field({
@@ -80,11 +80,11 @@ export class PaginationArgs {
   public before?: string;
 
   @Min(0)
-  @Field(type => Int, { nullable: true })
+  @Field((type) => Int, { nullable: true })
   public last?: number;
 
   @Min(0)
-  @Field(type => Int, {
+  @Field((type) => Int, {
     nullable: true,
     description:
       'Offset to use if neither after or before are provided. Otherwise, they will take precedence.',
