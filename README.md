@@ -170,7 +170,7 @@ public async list(@Parent() item: TodoItem) {
 }
 ```
 
-We can use batch loading to avoid the N+1 query problem here. First, we need to define a new loader by extending `BatchLoader` and overriding the `load` method
+We can use batch loading to avoid the N+1 query problem here. First, we need to define a new loader by implementing `DataLoaderFactory` and defining the `create` method
 
 ```typescript
 import { DataLoaderFactory } from 'nest-graphql-utils';
