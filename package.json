@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "dataloader": "^2.1.0",
     "reflect-metadata": "^0.1.13"
   },
